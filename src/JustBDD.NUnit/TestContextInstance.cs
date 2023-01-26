@@ -4,5 +4,5 @@ namespace JustBDD.NUnit;
 
 public static class TestContextInstance
 {
-    public static TestContext Current { get; set; }
+    public static TestContext? Current { get; set; }
 }

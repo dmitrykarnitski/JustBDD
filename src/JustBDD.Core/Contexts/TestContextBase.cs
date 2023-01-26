@@ -4,7 +4,7 @@ namespace JustBDD.Core.Contexts;
 
 public abstract class TestContextBase : ITestContext
 {
-    public ContextStore ContextStore { get; private set; }
+    public ContextStore ContextStore { get; private set; } = null!;
 
     public virtual void Initialize(ContextStore contextStore)
     {

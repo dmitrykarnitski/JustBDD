@@ -5,9 +5,14 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JustBDD.Core", "JustBDD.Core\JustBDD.Core.csproj", "{7813FA51-26B9-43C4-91F6-07475DEADD70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustBDD.NUnit", "JustBDD.NUnit\JustBDD.NUnit.csproj", "{508170FD-47BE-43F8-81D3-D5F11A9ED95D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JustBDD.NUnit", "JustBDD.NUnit\JustBDD.NUnit.csproj", "{508170FD-47BE-43F8-81D3-D5F11A9ED95D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustBDD.NUnit.DependencyInjection", "JustBDD.NUnit.DependencyInjection\JustBDD.NUnit.DependencyInjection.csproj", "{2DF3E657-727A-4143-A239-2F2B619C6E46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JustBDD.NUnit.DependencyInjection", "JustBDD.NUnit.DependencyInjection\JustBDD.NUnit.DependencyInjection.csproj", "{2DF3E657-727A-4143-A239-2F2B619C6E46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23EA7D64-FEB6-443E-A4F7-BD6F375FF147}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

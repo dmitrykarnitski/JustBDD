@@ -5,17 +5,17 @@ namespace JustBDD.Core;
 
 public abstract class StepBase<TStep> : IAnd<TStep> where TStep : StepBase<TStep>
 {
-    private TStep _and;
+    private TStep? _and;
 
     public TStep And
     {
-        get => (TStep)((StepBase<TStep>)_and ?? this);
+        get => (TStep)((StepBase<TStep>?)_and ?? this);
         set => _and = value;
     }
 
-    internal ContextStore ScenarioStore { get; private set; }
+    internal ContextStore ScenarioStore { get; private set; } = null!;
 
-    internal ContextStore FeatureStore { get; private set; }
+    internal ContextStore FeatureStore { get; private set; } = null!;
 
     internal void InitializeContextStores(ContextStore featureStore, ContextStore scenarioStore)
     {
@@ -35,7 +35,7 @@ public abstract class StepBase<TStep> : IAnd<TStep> where TStep : StepBase<TStep
 
     public TStepBuilder StepFactory<TStepBuilder>() where TStepBuilder : StepBase<TStep>, new()
     {
-        TStepBuilder newStepBuilder = new TStepBuilder();
+        var newStepBuilder = new TStepBuilder();
 
         newStepBuilder.CopyFrom(this);
 

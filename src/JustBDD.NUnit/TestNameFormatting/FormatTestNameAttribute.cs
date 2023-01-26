@@ -71,13 +71,14 @@ public class FormatTestNameAttribute : NUnitAttribute, IApplyToTest
         return r.Replace(input, " ");
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "Only English alphabet lowercase letters are supported.")]
     private string ConvertToSentenseCase(string input)
     {
-        var lowerCase = input.ToLower();
+        var lowerCase = input.ToLowerInvariant();
 
         var r = new Regex(@"(^[a-z])|\.\s+(.)", RegexOptions.ExplicitCapture);
 
-        return r.Replace(lowerCase, s => s.Value.ToUpper());
+        return r.Replace(lowerCase, s => s.Value.ToUpperInvariant());
     }
 
     private string? GetDescriptionAttributeValue(IReflectionInfo reflectionInfo)
