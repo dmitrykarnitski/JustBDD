@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace JustBDD.NUnit.TestNameFormatting;
 
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public class FormatTestNameAttribute : NUnitAttribute, IApplyToTest
+[AttributeUsage(AttributeTargets.Class)]
+public sealed class FormatTestNameAttribute : NUnitAttribute, IApplyToTest
 {
     public void ApplyToTest(Test test)
     {

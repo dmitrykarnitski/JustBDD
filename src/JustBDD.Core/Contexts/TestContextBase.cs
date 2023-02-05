@@ -13,6 +13,11 @@ public abstract class TestContextBase : ITestContext
 
     public void Dispose()
     {
-        ContextStore?.Dispose();
+        Dispose(true);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        ContextStore.Dispose();
     }
 }

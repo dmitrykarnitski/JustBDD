@@ -5,7 +5,7 @@ using NUnit.Framework.Internal;
 
 namespace JustBDD.NUnit.TestProperties;
 
-internal class SetScenarioStoreToPropertiesAttribute : NUnitAttribute, IApplyToTest
+internal sealed class SetScenarioStoreToPropertiesAttribute : NUnitAttribute, IApplyToTest
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context store is disposed at the tear down stage.")]
     public void ApplyToTest(Test test)

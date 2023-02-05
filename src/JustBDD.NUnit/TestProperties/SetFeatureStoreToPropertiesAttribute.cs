@@ -5,7 +5,9 @@ using NUnit.Framework.Internal;
 
 namespace JustBDD.NUnit.TestProperties;
 
-internal class SetFeatureStoreToPropertiesAttribute : NUnitAttribute, IApplyToTest
+#pragma warning disable CA2000 // ContextStore is disposed as part of teardown
+
+internal sealed class SetFeatureStoreToPropertiesAttribute : NUnitAttribute, IApplyToTest
 {
     public void ApplyToTest(Test test)
     {
@@ -25,3 +27,5 @@ internal class SetFeatureStoreToPropertiesAttribute : NUnitAttribute, IApplyToTe
         }
     }
 }
+
+#pragma warning restore CA2000

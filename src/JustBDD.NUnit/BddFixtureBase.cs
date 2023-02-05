@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 namespace JustBDD.NUnit;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning disable CA1000 // 'static' keyword is required to apply OneTimeTearDown attributes
+#pragma warning disable CA1005 // FixtureBase requires 3 type arguments for GWT pattern implementation
 
-[TestFixture]
 [SetSuiteStoreToProperties]
 [SetFeatureStoreToProperties]
 [SetScenarioStoreToProperties]
@@ -18,14 +18,13 @@ public class BddFixtureBase<TGiven, TWhen, TThen>
     where TWhen : RootStepBase<TWhen>, new()
     where TThen : RootStepBase<TThen>, new()
 {
+    public TGiven Given { get; private set; } = null!;
 
-    public TGiven Given { get; private set; }
+    public TWhen When { get; private set; } = null!;
 
-    public TWhen When { get; private set; }
+    public TThen Then { get; private set; } = null!;
 
-    public TThen Then { get; private set; }
-
-    internal FixtureContext Context { get; private set; }
+    internal FixtureContext Context { get; private set; } = null!;
 
     [SetUp]
     public void BddFixtureBaseBeforeEachTest()
@@ -59,7 +58,7 @@ public class BddFixtureBase<TGiven, TWhen, TThen>
     public static void BddFixtureBaseAfterAllTests()
     {
         var featureStore = TestContext.CurrentContext.Test.Properties.GetFeatureStore();
-        featureStore?.Dispose();
+        featureStore.Dispose();
     }
 
     protected TScenario ScenarioFactory<TScenario>() where TScenario : ScenarioBase, new()
@@ -73,4 +72,5 @@ public class BddFixtureBase<TGiven, TWhen, TThen>
     }
 }
 
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning restore CA1005
+#pragma warning restore CA1000

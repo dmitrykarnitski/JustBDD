@@ -34,6 +34,11 @@ public class ContextStore : IDisposable
 
     public void Dispose()
     {
+        Dispose(true);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
         foreach (var item in _contextStore)
         {
             if (item.Value is IDisposable disposable)

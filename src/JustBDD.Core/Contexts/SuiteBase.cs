@@ -8,6 +8,11 @@ public abstract class SuiteBase : ITestContext
 
     public void Dispose()
     {
-        SuiteStore.Instance?.Dispose();
+        Dispose(true);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        SuiteStore.Instance.Dispose();
     }
 }

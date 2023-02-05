@@ -5,7 +5,7 @@ using NUnit.Framework.Internal;
 
 namespace JustBDD.NUnit.TestProperties;
 
-internal class SetSuiteStoreToPropertiesAttribute : NUnitAttribute, IApplyToTest
+internal sealed class SetSuiteStoreToPropertiesAttribute : NUnitAttribute, IApplyToTest
 {
     public void ApplyToTest(Test test)
     {

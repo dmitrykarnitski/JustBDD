@@ -1,7 +1,7 @@
 ﻿using JustBDD.Core.Contexts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace JustBDD.NUnit;
+namespace JustBDD.NUnit.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
