@@ -2,5 +2,5 @@
 
 public static class SuiteStore
 {
-    public static readonly ContextStore Instance = new ContextStore();
+    public static readonly ContextStore Instance = new();
 }

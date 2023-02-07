@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace JustBDD.NUnit.TestNameFormatting;
 
@@ -58,7 +58,7 @@ public sealed class FormatTestNameAttribute : NUnitAttribute, IApplyToTest
 
         var testName = ConvertToSentenseCase(methodNameSplitInWords);
 
-        return char.ToLowerInvariant(testName[0]) + testName.Substring(1);
+        return char.ToLowerInvariant(testName[0]) + testName[1..];
     }
 
     private string SplitIntoWords(string input)

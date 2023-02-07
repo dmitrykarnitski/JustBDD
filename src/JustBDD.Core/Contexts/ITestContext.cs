@@ -1,5 +1,5 @@
-﻿using JustBDD.Core.Contexts.Stores;
-using System;
+﻿using System;
+using JustBDD.Core.Contexts.Stores;
 
 namespace JustBDD.Core.Contexts;
 
