@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JustBDD.Core" Version="0.0.1" />
+    <PackageReference Include="JustBDD.Core" Version="0.0.6-alpha8" />
     <PackageReference Include="NUnit" Version="3.13.3" />
   </ItemGroup>
 
