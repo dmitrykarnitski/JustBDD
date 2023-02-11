@@ -1,0 +1,39 @@
+[*.cs]
+
+# CA1002: Do not expose generic lists
+dotnet_diagnostic.CA1002.severity = suggestion
+dotnet_code_quality.CA1002.api_surface = public, internal
+
+# CA1005: Avoid excessive parameters on generic types
+dotnet_diagnostic.CA1005.severity = suggestion
+
+# CA1014: Mark assemblies with CLSCompliantAttribute
+dotnet_diagnostic.CA1014.severity = none
+
+# CA1016: Mark assemblies with AssemblyVersionAttribute
+dotnet_diagnostic.CA1016.severity = none
+
+# CA1017: Mark assemblies with ComVisibleAttribute
+dotnet_diagnostic.CA1017.severity = none
+
+# CA1307: Specify StringComparison for clarity
+dotnet_diagnostic.CA1307.severity = suggestion
+
+# CA1308: Normalize strings to uppercase
+dotnet_diagnostic.CA1308.severity = suggestion
+
+# CA1309: Use ordinal StringComparison
+dotnet_diagnostic.CA1309.severity = suggestion
+
+# CA1310: Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = none
+
+# CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = none
+
+# CA1716: Identifiers should not match keywords
+dotnet_diagnostic.CA1716.severity = suggestion
+dotnet_code_quality.CA1716.api_surface = public
+
+# CA1819: Properties should not return arrays
+dotnet_diagnostic.CA1819.severity = none

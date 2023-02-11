@@ -1,0 +1,12 @@
+{
+  "keys": [
+    {
+      "kty": "RSA",
+      "n": "bDTahZ9SlZJIRh8viBCxvut1Igx7hzWNL0tixc240N5DJa2S6JsYAoXc19LKN0-DCpv70mW62GJpa45v-zeI7ruL0s_U1ZkQcqmkb1POpLPAtXM-mHiVHAkCtS9sDxu2-H40seN35b-KE4ChsBUwlChzXUYywk5q6mRM47Ck5oE",
+      "e": "AQAB",
+      "kid": "dummy-key-id",
+      "x5t": "dummy-key-id",
+      "use": "sig"
+    }
+  ]
+}
