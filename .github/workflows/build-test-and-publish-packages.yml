@@ -9,6 +9,7 @@ on:
     branches:
       - master
       - develop
+      - test_ci
 
 jobs:
   build:
@@ -47,4 +48,4 @@ jobs:
           VERSION_SUFFIX=''
         fi
         
-        echo $VERSION_SUFFIX
+        echo "$VERSION_SUFFIX"
