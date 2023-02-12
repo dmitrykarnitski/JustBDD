@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "develop", "master", "test_publish" ]
     paths:
-      - '**/JustBDD.Core/**'
+      - '**/src/JustBDD.Core/**'
       - '**/.github/workflows/publish-core-package.yml'
 
 env:
