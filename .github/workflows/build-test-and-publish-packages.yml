@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: CI
+name: CI (src)
 
 on:
   push:
@@ -17,9 +17,6 @@ jobs:
     defaults:
       run:
         working-directory: ./src
-    env:
-      VERSION_SUFFIX: |
-       
 
     steps:
     - uses: actions/checkout@v3
@@ -57,4 +54,6 @@ jobs:
 
         echo "VERSION_SUFFIX=$VERSION_SUFFIX" >> $GITHUB_ENV
     - name: Publish Core package
-      run: echo ${{ env.VERSION_SUFFIX }}
+      run: |
+        dotnet pack "JustBDD.Core" --output nupkgs --configuration Release --version-suffix '${{ env.VERSION_SUFFIX }}'
+        echo ${{ env.VERSION_SUFFIX }}
