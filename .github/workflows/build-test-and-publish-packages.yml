@@ -50,5 +50,7 @@ jobs:
         then
           VERSION_SUFFIX=''
         fi
+        
+        echo 'VERSION_SUFFIX=$VERSION_SUFFIX' >> $GITHUB_ENV
     - name: Publish Core package
       run: echo ${{ env.VERSION_SUFFIX }}
