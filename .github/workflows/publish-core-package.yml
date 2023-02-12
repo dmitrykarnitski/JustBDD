@@ -8,12 +8,13 @@ on:
     paths:
       - '**/src/JustBDD.Core/**'
       - '**/.github/workflows/publish-core-package.yml'
+      - 'README.md'
 
 env:
   PROJECT_NAME: 'JustBDD.Core'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     defaults:

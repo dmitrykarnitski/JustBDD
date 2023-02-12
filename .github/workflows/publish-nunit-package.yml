@@ -8,6 +8,7 @@ on:
     paths:
       - '**/src/JustBDD.NUnit/**'
       - '**/.github/workflows/publish-nunit-package.yml'
+      - 'README.md'
 
 env:
   PROJECT_NAME: 'JustBDD.NUnit'
