@@ -1,16 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Version>1.0.0$(VersionSuffix)</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Title>JustBDD.NUnit.DependencyInjection</Title>
     <Authors>dzmitryk</Authors>
-    <Version>0.0.1$(VersionSuffix)</Version>
-    <VersionSuffix>-alpha1</VersionSuffix>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JustBDD.NUnit" Version="0.0.1-alpha2" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JustBDD.NUnit" Version="1.0.0-beta-21" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
