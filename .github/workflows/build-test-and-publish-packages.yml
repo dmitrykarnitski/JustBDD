@@ -47,4 +47,4 @@ jobs:
           VERSION_SUFFIX=''
         fi
         
-        echo VERSION_SUFFIX
+        echo $VERSION_SUFFIX
