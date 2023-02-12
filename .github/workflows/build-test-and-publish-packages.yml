@@ -4,10 +4,11 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
-    branches: [ "develop" ]
+  push:
+    branches:
+      - master
+      - develop
 
 jobs:
   build:
@@ -29,3 +30,21 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish Core package
+      run: |
+        if [ github.event_name == 'pull_request' ]
+        then
+          VERSION_SUFFIX='-build-${{ github.ref_name }}-${{ github.run_id }}'
+        fi
+        
+        if [ github.event_name == 'push' ] && [ github.ref_name == 'test_ci' ]
+        then
+          VERSION_SUFFIX='-beta-${{ github.run_id }}'
+        fi
+        
+        if [ github.event_name == 'push' ] && [ github.ref_name == 'master' ]
+        then
+          VERSION_SUFFIX=''
+        fi
+        
+        echo VERSION_SUFFIX
