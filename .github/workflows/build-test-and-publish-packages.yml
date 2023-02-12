@@ -51,4 +51,4 @@ jobs:
           VERSION_SUFFIX=''
         fi
     - name: Publish Core package
-      run: echo $VERSION_SUFFIX
+      run: echo ${{ env.VERSION_SUFFIX }}
