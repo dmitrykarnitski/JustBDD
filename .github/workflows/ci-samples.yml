@@ -1,17 +1,17 @@
-name: CI (src)
+name: CI (samples)
 
 on:
   pull_request:
     paths:
-      - 'src/**'
-      - '**/.github/workflows/ci-src.yml'
+      - 'samples/**'
+      - '**/.github/workflows/ci-samples.yml'
   push:
     branches:
       - develop
       - master
     paths:
-      - 'src/**'
-      - '**/.github/workflows/ci-src.yml'
+      - 'samples/**'
+      - '**/.github/workflows/ci-samples.yml'
 
 jobs:
   build-and-test:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./src
+        working-directory: ./samples
 
     steps:
     - uses: actions/checkout@v3
