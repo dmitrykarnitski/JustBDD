@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <Title>JustBDD.Core</Title>
     <Authors>dzmitryk</Authors>
-    <Version>0.0.1$(VersionSuffix)</Version>
+    <Version>1.0.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
