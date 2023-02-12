@@ -33,7 +33,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish Core package
       run: |
-        VERSION_SUFFIX="qwrqwrqwr"
+        export VERSION_SUFFIX="qwrqwrqwr"
         if [ github.event_name == 'pull_request' ]
         then
           VERSION_SUFFIX="-build-${{ github.head_ref }}---${{ github.run_id }}---${{ github.run_attempt }}---${{ github.run_number }}"
