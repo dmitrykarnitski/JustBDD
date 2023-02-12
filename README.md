@@ -7,6 +7,10 @@ The original design of a BDD syntax that is in the core of JustBDD belongs to hi
 
 ## Description
 
+This library is intended to solve two main problems:
+- tests readability. In most of the cases, tests written by developers can be read only by developers and only right after they were written. Also, the test case description in most of the cases is just a test method name. This library allows to make test body as readable as possible for everybody and document a test case properly.
+- test steps reusability. When there are too many tests, inevitably there will be a custom solution to group test steps somehow. This lib suggest GWT-style structure as a possible solution.
+
 Comparison to other libraries:
 - Specflow. Specflow is a great BDD library to use for complex specification-first development scenarios. JustBDD is intended to be used when there is no BDD specification available at the beginnging.
 - LightBDD. LightBDD is also a great library, but it does not facilitate the structure of the tests as well does not facilitate code reusability.
@@ -19,11 +23,11 @@ Pros:
 - Maintainability. The library forces to have a structure for test step methods.
 - Code reusability. Allows ultimate reusability of tests steps which facilitates TDD.
 - Readability. Test body looks like human readable text, so test can be used for onboarding new people on the project.
+- Flexibility. Yes, it facilitates the structure of the tests, but everything else can be adjusted as needed for specific project and domain language.
 
 Cons:
-- Custom. Anyways, the library is something custom. Solution: in such case - just copy it fully and adjust for your needs.
 - No parallelization. There are some static things that block parallelization support. Solution: there is no solution for now, however - the library use case is high-level API tests, so parallelization there most-likely may cause random tests failures or complex data setup.
-- No asyn/await support out of the box. Solution: no solution here for now, but in the future integration with LightBDD may help to resolve this issue.
+- Awaitable methods look a bit ugly. Solution: no solution here for now, but in the future integration with LightBDD may help to resolve this issue.
 
 Future plans:
 - Provide more samples
