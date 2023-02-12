@@ -4,7 +4,6 @@
 name: CI
 
 on:
-  pull_request:
   push:
     branches:
       - master
@@ -36,10 +35,10 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Set version suffix
       run: |
-        if [ '${{ github.event_name }}' == 'pull_request' ]
-        then
-          VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
-        fi
+        # if [ '${{ github.event_name }}' == 'pull_request' ]
+        # then
+        #   VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
+        # fi
         
         if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
         then
@@ -50,8 +49,7 @@ jobs:
         then
           VERSION_SUFFIX=''
         fi
-        
-        echo $VERSION_SUFFIX
+
         echo "VERSION_SUFFIX=$VERSION_SUFFIX" >> $GITHUB_ENV
     - name: Publish Core package
       run: echo ${{ env.VERSION_SUFFIX }}
