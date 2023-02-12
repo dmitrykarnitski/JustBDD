@@ -3,6 +3,9 @@ name: Publish JustBDD.Core
 on:
   push:
     branches: [ "develop", "master", "test_publish" ]
+    paths:
+      - '**/JustBDD.Core/**'
+      - '**/.github/workflows/publish-core-package.yml'
 
 env:
   PROJECT_NAME: 'JustBDD.Core'
