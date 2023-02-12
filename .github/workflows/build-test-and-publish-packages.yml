@@ -56,4 +56,6 @@ jobs:
     - name: Publish Core package
       run: |
         dotnet pack "JustBDD.Core" --output nupkgs --configuration Release --version-suffix '${{ env.VERSION_SUFFIX }}'
+        PACKAGE_PATH=$(find . -path '/nupkgs/*${{ env.VERSION_SUFFIX }}.nupkg')
         echo ${{ env.VERSION_SUFFIX }}
+        echo $PACKAGE_PATH
