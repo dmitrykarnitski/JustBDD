@@ -1,0 +1,59 @@
+name: Publish JustBDD.Core
+
+on:
+  push:
+    branches: [ "develop", "master", "test_publish" ]
+
+env:
+  PROJECT_NAME: 'JustBDD.Core'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./src
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Set version suffix
+      run: |
+        # if [ '${{ github.event_name }}' == 'pull_request' ]
+        # then
+        #   VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
+        # fi
+        
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'test_publish' ]
+        then
+          VERSION_SUFFIX='-alpha-${{ github.run_number }}${{ github.run_attempt }}'
+        fi
+        
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
+        then
+          VERSION_SUFFIX='-beta-${{ github.run_number }}${{ github.run_attempt }}'
+        fi
+        
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'master' ]
+        then
+          VERSION_SUFFIX=''
+        fi
+        
+        echo "VERSION_SUFFIX=$VERSION_SUFFIX" >> $GITHUB_ENV
+    - name: Publish Core package
+      run: |
+        dotnet pack '${{ env.PROJECT_NAME }}' --output nupkgs --configuration Release --version-suffix '${{ env.VERSION_SUFFIX }}'
+        
+        PACKAGE_PATH=$(find . -path '**/nupkgs/${{ env.PROJECT_NAME }}.*${{ env.VERSION_SUFFIX }}.nupkg')
+        
+        dotnet nuget push $PACKAGE_PATH --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        
+        echo ${{ secrets.NUGET_API_KEY }}
+        echo ${{ env.VERSION_SUFFIX }}
+        echo $PACKAGE_PATH
