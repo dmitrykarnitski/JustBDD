@@ -21,12 +21,12 @@ public class MockedInMemoryRepository<TItem, TId>
     }
     public IEnumerable<TItem> GetItems()
     {
-        return _items.DeepClone();
+        return _items.DeepClone()!;
     }
 
     protected IReadOnlyCollection<TItem> GetAllItems()
     {
-        return _items.DeepClone();
+        return _items.DeepClone()!;
     }
 
     public TItem? FindById(TId id)
@@ -71,7 +71,7 @@ public class MockedInMemoryRepository<TItem, TId>
         var idParameter = Expression.Parameter(typeof(TId), "id");
 
         var propertyInfo = typeof(TItem).GetProperty("Id");
-        if (propertyInfo.PropertyType != typeof(TId))
+        if (propertyInfo?.PropertyType != typeof(TId))
         {
             throw new InvalidOperationException("Type of ID property from item does not match with repository ID property type");
         }
@@ -80,7 +80,7 @@ public class MockedInMemoryRepository<TItem, TId>
 
         var compareIds = Expression.Equal(getItemId, idParameter);
 
-        return Expression.Lambda<Func<TItem, TId, bool>>(compareIds, new[] { itemParameter, idParameter }).Compile();
+        return Expression.Lambda<Func<TItem, TId, bool>>(compareIds, itemParameter, idParameter).Compile();
     }
 
     private static Func<TItem, TId> BuildIdSelector()
@@ -88,14 +88,14 @@ public class MockedInMemoryRepository<TItem, TId>
         var itemParameter = Expression.Parameter(typeof(TItem), "item");
 
         var propertyInfo = typeof(TItem).GetProperty("Id");
-        if (propertyInfo.PropertyType != typeof(TId))
+        if (propertyInfo?.PropertyType != typeof(TId))
         {
             throw new InvalidOperationException("Type of ID property from item does not match with repository ID property type");
         }
 
         var getItemId = Expression.Property(itemParameter, propertyInfo);
 
-        return Expression.Lambda<Func<TItem, TId>>(getItemId, new[] { itemParameter }).Compile();
+        return Expression.Lambda<Func<TItem, TId>>(getItemId, itemParameter).Compile();
     }
 
     private static Action<TItem, TId> BuildIdSetter()
@@ -104,7 +104,7 @@ public class MockedInMemoryRepository<TItem, TId>
         var idParameter = Expression.Parameter(typeof(TId), "id");
 
         var propertyInfo = typeof(TItem).GetProperty("Id");
-        if (propertyInfo.PropertyType != typeof(TId))
+        if (propertyInfo?.PropertyType != typeof(TId))
         {
             throw new InvalidOperationException("Type of ID property from item does not match with repository ID property type");
         }
@@ -113,7 +113,7 @@ public class MockedInMemoryRepository<TItem, TId>
 
         var assign = Expression.Assign(itemIdProperty, idParameter);
 
-        return Expression.Lambda<Action<TItem, TId>>(assign, new[] { itemParameter, idParameter }).Compile();
+        return Expression.Lambda<Action<TItem, TId>>(assign, itemParameter, idParameter).Compile();
     }
 
     private static Func<TItem, TId, TId> BuildNewIdGenerator()
@@ -122,25 +122,25 @@ public class MockedInMemoryRepository<TItem, TId>
         var idParameter = Expression.Parameter(typeof(TId), "id");
 
         var propertyInfo = typeof(TItem).GetProperty("Id");
-        if (propertyInfo.PropertyType != typeof(TId))
+        if (propertyInfo?.PropertyType != typeof(TId))
         {
             throw new InvalidOperationException("Type of ID property from item does not match with repository ID property type");
         }
 
         if (typeof(TId) == typeof(int))
         {
-            return Expression.Lambda<Func<TItem, TId, TId>>(Expression.Increment(idParameter), new[] { itemParameter, idParameter }).Compile();
+            return Expression.Lambda<Func<TItem, TId, TId>>(Expression.Increment(idParameter), itemParameter, idParameter).Compile();
         }
 
         if (typeof(TId) == typeof(string))
         {
-            var newGuidMethod = typeof(Guid).GetMethod(nameof(Guid.NewGuid));
-            var toStringMethod = typeof(Guid).GetMethod(nameof(Guid.ToString));
+            var newGuidMethod = typeof(Guid).GetMethod(nameof(Guid.NewGuid))!;
+            var toStringMethod = typeof(Guid).GetMethod(nameof(Guid.ToString))!;
             var newGuidMethodCall = Expression.Call(newGuidMethod);
 
             var toStringMethodCall = Expression.Call(newGuidMethodCall, toStringMethod);
 
-            return Expression.Lambda<Func<TItem, TId, TId>>(toStringMethodCall, new[] { itemParameter, idParameter }).Compile();
+            return Expression.Lambda<Func<TItem, TId, TId>>(toStringMethodCall, itemParameter, idParameter).Compile();
         }
 
         throw new InvalidOperationException("Id type is not supported");

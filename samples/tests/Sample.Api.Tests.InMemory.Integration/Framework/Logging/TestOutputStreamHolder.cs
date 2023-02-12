@@ -7,5 +7,5 @@ namespace Sample.Api.Tests.InMemory.Integration.Framework.Logging;
 /// </summary>
 public static class TestOutputStreamHolder
 {
-    public static TextWriter Current { get; set; }
+    public static TextWriter? Current { get; set; }
 }

@@ -33,6 +33,6 @@ public class CategoryBuilder
 
     public Category Build()
     {
-        return _request.DeepClone();
+        return _request.DeepClone()!;
     }
 }

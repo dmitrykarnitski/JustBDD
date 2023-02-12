@@ -5,24 +5,21 @@ namespace JustBDD.Core.Contexts.Stores;
 
 public class ContextStore : IDisposable
 {
-    private readonly IDictionary<string, object> _contextStore;
+    private readonly IDictionary<string, object?> _contextStore;
 
     public ContextStore()
     {
-        _contextStore = new Dictionary<string, object>();
+        _contextStore = new Dictionary<string, object?>();
     }
 
     public T? Get<T>(string propertyName)
     {
-        if (!_contextStore.ContainsKey(propertyName))
-        {
-            return default;
-        }
-
-        return (T)_contextStore[propertyName];
+        return _contextStore.TryGetValue(propertyName, out var value)
+            ? (T?)value
+            : default;
     }
 
-    public void Set(string propertyName, object value)
+    public void Set(string propertyName, object? value)
     {
         _contextStore[propertyName] = value;
     }
@@ -35,6 +32,7 @@ public class ContextStore : IDisposable
     public void Dispose()
     {
         Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)

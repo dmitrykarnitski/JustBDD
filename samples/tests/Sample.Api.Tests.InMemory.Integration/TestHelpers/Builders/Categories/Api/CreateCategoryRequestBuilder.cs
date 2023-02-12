@@ -19,6 +19,6 @@ public class CreateCategoryRequestBuilder
 
     public CreateCategoryRequest Build()
     {
-        return _request.DeepClone();
+        return _request.DeepClone()!;
     }
 }

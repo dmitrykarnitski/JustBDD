@@ -11,8 +11,8 @@ public class JwtTokenBuilder
     private readonly MockJwtTokenGenerator _jwtTokenGenerator = new();
 
     private readonly ICollection<Claim> _claims = new List<Claim>();
-    private string _issuer;
-    private string _audience;
+    private string? _issuer;
+    private string? _audience;
     private DateTime _expiresAt;
 
     public JwtTokenBuilder WithValidMockedAuthConfiguration()

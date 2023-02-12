@@ -8,7 +8,7 @@ namespace Sample.Api.Tests.InMemory.Integration.Framework.Authentication;
 
 public class MockJwtTokenGenerator
 {
-    public string Generate(ClaimsIdentity claimsIdentity, string issuer, string audience, DateTime expiresAt)
+    public string Generate(ClaimsIdentity claimsIdentity, string? issuer, string? audience, DateTime expiresAt)
     {
         using var rsa = MockedAuthenticationResourcesReader.GetPrivateRsaKey();
 
