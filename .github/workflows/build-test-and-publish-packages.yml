@@ -38,12 +38,12 @@ jobs:
           VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
         fi
         
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'test_ci' ]
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
         then
           VERSION_SUFFIX='-beta-${{ github.run_number }}${{ github.run_attempt }}'
         fi
         
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'master' ]
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'test_ci' ]
         then
           VERSION_SUFFIX='bla'
         fi
