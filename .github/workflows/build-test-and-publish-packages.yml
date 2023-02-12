@@ -55,8 +55,12 @@ jobs:
         echo "VERSION_SUFFIX=$VERSION_SUFFIX" >> $GITHUB_ENV
     - name: Publish Core package
       run: |
-        dotnet pack "JustBDD.Core" --output nupkgs --configuration Release --version-suffix '${{ env.VERSION_SUFFIX }}'
-        find . -path '**/nupkgs/*${{ env.VERSION_SUFFIX }}.nupkg'
-        PACKAGE_PATH=$(find . -path '**/nupkgs/*${{ env.VERSION_SUFFIX }}.nupkg')
+        dotnet pack 'JustBDD.Core' --output nupkgs --configuration Release --version-suffix '${{ env.VERSION_SUFFIX }}'
+        
+        PACKAGE_PATH=$(find . -path '**/nupkgs/JustBDD.Core.*${{ env.VERSION_SUFFIX }}.nupkg')
+        
+        dotnet nuget push $PACKAGE_PATH --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        
+        echo ${{ secrets.NUGET_API_KEY }}
         echo ${{ env.VERSION_SUFFIX }}
         echo $PACKAGE_PATH
