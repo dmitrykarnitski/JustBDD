@@ -32,7 +32,7 @@ public class ScenarioDependencyResolutionBuilder<TScenario> where TScenario : Sc
 
     private TScenario CreateScenarioFromTestContext()
     {
-        var scenarioStore = TestContextInstance.Current.Test.Properties.GetScenarioStore();
-        return ContextFactory.Create<TScenario>(scenarioStore);
+        var scenarioStore = TestContextInstance.Current?.Test.Properties.GetScenarioStore();
+        return ContextFactory.Create<TScenario>(scenarioStore!);
     }
 }
