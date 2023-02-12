@@ -40,6 +40,11 @@ jobs:
         #   VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
         # fi
         
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'test_ci' ]
+        then
+          VERSION_SUFFIX='-alpha-${{ github.run_number }}${{ github.run_attempt }}'
+        fi
+        
         if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
         then
           VERSION_SUFFIX='-beta-${{ github.run_number }}${{ github.run_attempt }}'
