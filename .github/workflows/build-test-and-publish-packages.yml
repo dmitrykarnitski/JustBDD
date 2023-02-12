@@ -5,10 +5,7 @@ name: CI (src)
 
 on:
   push:
-    branches:
-      - master
-      - develop
-      - test_ci
+    branches: [ "develop", "master", "test_ci" ]
 
 jobs:
   build-and-test:
