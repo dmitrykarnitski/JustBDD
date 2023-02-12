@@ -3,14 +3,22 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Version>1.0.0$(VersionSuffix)</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Title>JustBDD.NUnit</Title>
     <Authors>dzmitryk</Authors>
-    <Version>0.0.1$(VersionSuffix)</Version>
-    <VersionSuffix>-alpha1</VersionSuffix>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JustBDD.Core" Version="0.0.1-alpha8" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JustBDD.Core" Version="1.0.0-beta-121" />
     <PackageReference Include="NUnit" Version="3.13.3" />
   </ItemGroup>
 

@@ -13,7 +13,7 @@ env:
   PROJECT_NAME: 'JustBDD.NUnit'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     defaults:
