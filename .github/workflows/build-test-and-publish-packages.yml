@@ -11,7 +11,7 @@ on:
       - test_ci
 
 jobs:
-  build:
+  build-and-test:
 
     runs-on: ubuntu-latest
     defaults:
@@ -29,38 +29,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Set version suffix
-      run: |
-        # if [ '${{ github.event_name }}' == 'pull_request' ]
-        # then
-        #   VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
-        # fi
-        
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'test_ci' ]
-        then
-          VERSION_SUFFIX='-alpha-${{ github.run_number }}${{ github.run_attempt }}'
-        fi
-        
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
-        then
-          VERSION_SUFFIX='-beta-${{ github.run_number }}${{ github.run_attempt }}'
-        fi
-        
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'master' ]
-        then
-          VERSION_SUFFIX=''
-        fi
-
-        echo "VERSION_SUFFIX=$VERSION_SUFFIX" >> $GITHUB_ENV
-    - name: Publish Core package
-      run: |
-        dotnet pack 'JustBDD.Core' --output nupkgs --configuration Release --version-suffix '${{ env.VERSION_SUFFIX }}'
-        
-        PACKAGE_PATH=$(find . -path '**/nupkgs/JustBDD.Core.*${{ env.VERSION_SUFFIX }}.nupkg')
-        
-        dotnet nuget push $PACKAGE_PATH --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-        
-        echo ${{ secrets.NUGET_API_KEY }}
-        echo ${{ env.VERSION_SUFFIX }}
-        echo $PACKAGE_PATH
+      run: dotnet test --no-build
