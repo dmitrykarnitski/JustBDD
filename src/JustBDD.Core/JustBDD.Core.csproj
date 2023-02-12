@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <Title>JustBDD.Core</Title>
     <Authors>dzmitryk</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>1.0.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
