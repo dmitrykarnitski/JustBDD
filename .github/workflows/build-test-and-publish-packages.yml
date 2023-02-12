@@ -20,20 +20,7 @@ jobs:
         working-directory: ./src
     env:
       VERSION_SUFFIX: |
-        # if [ '${{ github.event_name }}' == 'pull_request' ]
-        # then
-        #   '-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
-        # fi
-        
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
-        then
-          '-beta-${{ github.run_number }}${{ github.run_attempt }}'
-        fi
-        
-        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'master' ]
-        then
-          ''
-        fi
+       
 
     steps:
     - uses: actions/checkout@v3
@@ -47,5 +34,21 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Set version suffix
+      run: |
+        # if [ '${{ github.event_name }}' == 'pull_request' ]
+        # then
+        #   VERSION_SUFFIX='-build-${{ github.head_ref }}-${{ github.run_number }}${{ github.run_attempt }}'
+        # fi
+        
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'develop' ]
+        then
+          VERSION_SUFFIX='-beta-${{ github.run_number }}${{ github.run_attempt }}'
+        fi
+        
+        if [ '${{ github.event_name }}' == 'push' ] && [ '${{ github.ref_name }}' == 'master' ]
+        then
+          VERSION_SUFFIX=''
+        fi
     - name: Publish Core package
       run: echo $VERSION_SUFFIX
