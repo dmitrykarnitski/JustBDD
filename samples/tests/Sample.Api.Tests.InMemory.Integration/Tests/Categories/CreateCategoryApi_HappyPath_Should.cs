@@ -26,6 +26,7 @@ public class CreateCategoryApiHappyPathShould : TestFixtureBase
 
         Given.IHave.LoggedInAs.AValidUser().And.DatabaseHas.Category(existingCategory);
         When.ICall.TheCategoriesApi.CreateEndpoint(request);
-        Then.TheCall.WillSucceedWithStatusCode(HttpStatusCode.Created).And.TheDatabaseWillHave.Categories.EqualTo(expectedCategory);
+        Then.TheCall.WillSucceedWithStatusCode(HttpStatusCode.Created)
+            .And.TheDatabaseWillHave.Categories.EqualTo(expectedCategory);
     }
 }
