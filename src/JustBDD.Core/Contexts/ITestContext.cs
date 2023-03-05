@@ -3,7 +3,7 @@ using JustBDD.Core.Contexts.Stores;
 
 namespace JustBDD.Core.Contexts;
 
-public interface ITestContext : IDisposable
+public interface ITestContext : IAsyncDisposable, IDisposable
 {
-    ContextStore ContextStore { get; }
+    IContextStore ContextStore { get; }
 }

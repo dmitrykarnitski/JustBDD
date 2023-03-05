@@ -4,7 +4,7 @@ namespace JustBDD.Core;
 
 public abstract class RootStepBase<TStep> : StepBase<TStep> where TStep : RootStepBase<TStep>
 {
-    public void Initialize(ContextStore featureStore, ContextStore scenarioStore)
+    public void Initialize(IContextStore featureStore, IContextStore scenarioStore)
     {
         InitializeContextStores(featureStore, scenarioStore);
     }

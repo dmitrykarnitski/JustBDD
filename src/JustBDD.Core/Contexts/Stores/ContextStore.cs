@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace JustBDD.Core.Contexts.Stores;
 
-public class ContextStore : IDisposable
+internal class ContextStore : IContextStore
 {
     private readonly IDictionary<string, object?> _contextStore;
 
@@ -33,6 +35,28 @@ public class ContextStore : IDisposable
     {
         Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        foreach (var item in _contextStore)
+        {
+            if (item.Value is IAsyncDisposable disposable)
+            {
+                try
+                {
+                    await disposable.DisposeAsync();
+                }
+#pragma warning disable CA1031
+                catch (Exception e)
+#pragma warning restore CA1031
+                {
+                    Trace.WriteLine($"Disposing failed for item={item.Key} of type={item.Value.GetType().Name} with error={e.Message}.");
+                }
+            }
+        }
+
+        Dispose();
     }
 
     protected virtual void Dispose(bool disposing)

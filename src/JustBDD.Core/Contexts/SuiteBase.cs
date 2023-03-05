@@ -1,14 +1,20 @@
-﻿using JustBDD.Core.Contexts.Stores;
+﻿using System.Threading.Tasks;
+using JustBDD.Core.Contexts.Stores;
 
 namespace JustBDD.Core.Contexts;
 
 public abstract class SuiteBase : ITestContext
 {
-    public ContextStore ContextStore => SuiteStore.Instance;
+    public IContextStore ContextStore => SuiteStore.Instance;
 
     public void Dispose()
     {
         Dispose(true);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await SuiteStore.Instance.DisposeAsync();
     }
 
     protected virtual void Dispose(bool disposing)

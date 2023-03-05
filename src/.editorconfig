@@ -751,45 +751,6 @@ dotnet_naming_symbols.instance_fields.applicable_kinds = field
 dotnet_naming_style.instance_field_style.capitalization = camel_case
 dotnet_naming_style.instance_field_style.required_prefix = _
 
-# Locals and parameters are camelCase
-dotnet_naming_rule.locals_should_be_camel_case.severity = warning
-dotnet_naming_rule.locals_should_be_camel_case.symbols = locals_and_parameters
-dotnet_naming_rule.locals_should_be_camel_case.style = camel_case_style
-
-dotnet_naming_symbols.locals_and_parameters.applicable_kinds = parameter, local
-
-dotnet_naming_style.camel_case_style.capitalization = camel_case
-
-# async methods has "Async" postfix
-# dotnet_naming_rule.methods_should_have_async_postfix.severity = suggestion
-# dotnet_naming_rule.methods_should_have_async_postfix.symbols = async_methods_and_local_functions
-# dotnet_naming_rule.methods_should_have_async_postfix.style = async_methods_style
-
-# dotnet_naming_symbols.async_methods_and_local_functions.applicable_kinds = method, local_function
-# dotnet_naming_symbols.async_methods_and_local_functions.required_modifiers = async
-
-# dotnet_naming_style.async_methods_style.capitalization = pascal_case
-# dotnet_naming_style.async_methods_style.required_suffix = Async
-
-# Local functions are PascalCase
-dotnet_naming_rule.local_functions_should_be_pascal_case.severity = warning
-dotnet_naming_rule.local_functions_should_be_pascal_case.symbols = local_functions
-dotnet_naming_rule.local_functions_should_be_pascal_case.style = local_function_style
-
-dotnet_naming_symbols.local_functions.applicable_kinds = local_function
-
-dotnet_naming_style.local_function_style.capitalization = pascal_case
-
-# By default, name items with PascalCase
-dotnet_naming_rule.members_should_be_pascal_case.severity = warning
-dotnet_naming_rule.members_should_be_pascal_case.symbols = all_members
-dotnet_naming_rule.members_should_be_pascal_case.style = pascal_case_style
-
-dotnet_naming_symbols.all_members.applicable_kinds = *
-
-dotnet_naming_style.pascal_case_style.capitalization = pascal_case
-
-
 
 ### Not documented rules
 # https://github.com/dotnet/docs/issues/28791

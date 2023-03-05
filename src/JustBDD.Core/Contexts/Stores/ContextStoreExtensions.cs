@@ -4,7 +4,10 @@ namespace JustBDD.Core.Contexts.Stores;
 
 public static class ContextStoreExtensions
 {
-    public static T GetAndInitialiseIfNotSet<T>(this ContextStore contextStore, string propertyName) where T : new()
+    public static T GetAndInitialiseIfNotSet<T>(
+        this IContextStore contextStore,
+        string propertyName)
+        where T : new()
     {
         if (!contextStore.Contains(propertyName))
         {
@@ -14,7 +17,10 @@ public static class ContextStoreExtensions
         return contextStore.Get<T>(propertyName)!;
     }
 
-    public static T GetAndInitialiseIfNotSet<T>(this ContextStore contextStore, string propertyName, Func<T> factory)
+    public static T GetAndInitialiseIfNotSet<T>(
+        this IContextStore contextStore,
+        string propertyName,
+        Func<T> factory)
     {
         if (!contextStore.Contains(propertyName))
         {

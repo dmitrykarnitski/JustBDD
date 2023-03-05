@@ -2,5 +2,5 @@
 
 public static class SuiteStore
 {
-    public static readonly ContextStore Instance = new();
+    public static readonly IContextStore Instance = ContextStoreFactory.Create();
 }
