@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-    <PackageReference Include="JustBDD.NUnit.DependencyInjection" Version="1.0.0-beta-71" />
+    <PackageReference Include="JustBDD.NUnit.DependencyInjection" Version="1.0.0-beta-81" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
