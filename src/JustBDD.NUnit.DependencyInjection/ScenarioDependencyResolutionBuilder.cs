@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace JustBDD.NUnit.DependencyInjection;
 
-public class ScenarioDependencyResolutionBuilder<TScenario> where TScenario : ScenarioBase, new()
+public class ScenarioDependencyResolutionBuilder<TScenario>
+    where TScenario : ScenarioBase, new()
 {
     private readonly IServiceCollection _services;
 
@@ -32,7 +33,7 @@ public class ScenarioDependencyResolutionBuilder<TScenario> where TScenario : Sc
 
     private TScenario CreateScenarioFromTestContext()
     {
-        var scenarioStore = TestContextInstance.Current?.Test.Properties.GetScenarioStore();
+        var scenarioStore = TestContextInstance.Current?.GetScenarioStore();
         return ContextFactory.Create<TScenario>(scenarioStore!);
     }
 }
