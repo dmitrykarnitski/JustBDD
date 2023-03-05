@@ -20,6 +20,6 @@ public class CategoriesApi_GetAllEndpoint_HappyPath_Should : TestFixtureBase
 
         Given.IHave.LoggedInAs.AValidUser().And.DatabaseHas.Category(existingCategory);
         When.ICall.TheCategoriesApi.GetAllEndpoint();
-        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponseEqualTo(new[] { expectedResponse });
+        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponseItemsEqualTo(new[] { expectedResponse });
     }
 }

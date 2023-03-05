@@ -38,7 +38,7 @@ public class TheCallStep : Step<ThenStep>
     public IAnd<ThenStep> WillFailWithValidationError(string errorMessage, string propertyName)
     {
         Scenario.HttpResponse.Should().NotBeNull();
-        Scenario.HttpResponseBody.Should().NotBeNull();
+        Scenario.HttpResponseBody.Should().NotBeEmpty();
 
         Scenario.HttpResponse!.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
 
@@ -49,7 +49,7 @@ public class TheCallStep : Step<ThenStep>
             Message = "Request validation failed.",
             Errors = new Dictionary<string, string[]>
             {
-                { propertyName, new []{errorMessage.Replace("{PropertyName}", propertyName) } }
+                { propertyName, new[] { errorMessage.Replace("{PropertyName}", propertyName) } }
             }
         };
 
@@ -62,20 +62,20 @@ public class TheCallStep : Step<ThenStep>
     {
         Scenario.HttpResponseBody.Should().NotBeEmpty();
 
-        var actualResponse = JsonConvert.DeserializeObject<TResponse>(Scenario.HttpResponseBody);
+        var actualResponse = JsonConvert.DeserializeObject<TResponse>(Scenario.HttpResponseBody!);
 
         actualResponse.Should().BeEquivalentTo(expectedResponse, o => o.RespectingRuntimeTypes());
 
         return this;
     }
 
-    public IAnd<ThenStep> WillHaveAResponseEqualTo<TItem>(IEnumerable<TItem> expectedResponse, bool checkOrdering = false)
+    public IAnd<ThenStep> WillHaveAResponseItemsEqualTo<TItem>(IEnumerable<TItem> expectedResponse, bool checkOrdering = false)
     {
         Scenario.HttpResponseBody.Should().NotBeEmpty();
 
-        var actualResponse = JsonConvert.DeserializeObject<IEnumerable<TItem>>(Scenario.HttpResponseBody);
+        var actualResponse = JsonConvert.DeserializeObject<IEnumerable<TItem>>(Scenario.HttpResponseBody!);
 
-        actualResponse.Should().AllBeEquivalentTo(
+        actualResponse.Should().BeEquivalentTo(
             expectedResponse,
             o =>
             {

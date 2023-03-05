@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using JustBDD.Core.Contexts;
+using JustBDD.Core.Contexts.Stores;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,9 +22,9 @@ internal class Suite : SuiteBase
     {
     }
 
-    public WebApplicationFactory<Program> Application => ContextStore.Get<WebApplicationFactory<Program>>(nameof(Application));
+    public WebApplicationFactory<Program> Application => ContextStore.Get<WebApplicationFactory<Program>>(nameof(Application))!;
 
-    public IServiceProvider ServiceProvider => ContextStore.Get<IServiceProvider>(nameof(ServiceProvider));
+    public IServiceProvider ServiceProvider => ContextStore.Get<IServiceProvider>(nameof(ServiceProvider))!;
 
     public IMapper Mapper => GetAndResolveIfNotSet<IMapper>(nameof(Mapper));
 
@@ -41,11 +42,6 @@ internal class Suite : SuiteBase
     private T GetAndResolveIfNotSet<T>(string propertyName)
         where T : notnull
     {
-        if (!ContextStore.Contains(propertyName))
-        {
-            ContextStore.Set(propertyName, ServiceProvider.GetRequiredService<T>());
-        }
-
-        return ContextStore.Get<T>(propertyName);
+        return ContextStore.GetAndInitialiseIfNotSet(propertyName, () => ServiceProvider.GetRequiredService<T>());
     }
 }
