@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api", "src\Sample.Api\Sample.Api.csproj", "{01EF8E50-F2CE-4EDB-9085-1D8C6B17B6A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api.Tests.InMemory.Integration", "tests\Sample.Api.Tests.InMemory.Integration\Sample.Api.Tests.InMemory.Integration.csproj", "{7CDE7500-F529-4E0C-8823-0DAF9B8296C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api.ComponentTests", "tests\Sample.Api.ComponentTests\Sample.Api.ComponentTests.csproj", "{7CDE7500-F529-4E0C-8823-0DAF9B8296C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C86F5F6C-E28E-4D16-B0DF-60AB844DA4F2}"
 	ProjectSection(SolutionItems) = preProject
