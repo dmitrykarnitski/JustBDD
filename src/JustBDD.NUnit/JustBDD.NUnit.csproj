@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-    <PackageReference Include="JustBDD.Core" Version="1.0.0-beta-151" />
+    <PackageReference Include="JustBDD.Core" Version="1.0.0-beta-161" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
