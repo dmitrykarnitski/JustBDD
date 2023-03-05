@@ -1,15 +1,17 @@
-﻿using JustBDD.Core;
+﻿using System.Threading.Tasks;
+using JustBDD.Core;
 using JustBDD.Core.Contexts;
-using JustBDD.Core.Contexts.Stores;
 using JustBDD.NUnit.ContextHelpers;
+using JustBDD.NUnit.TestOutputFormatting;
 using JustBDD.NUnit.TestProperties;
 using NUnit.Framework;
 
 namespace JustBDD.NUnit;
 
-#pragma warning disable CA1000 // 'static' keyword is required to apply OneTimeTearDown attributes
+#pragma warning disable CA1000 // 'static' keyword for methods is required to apply OneTimeTearDown attributes
 #pragma warning disable CA1005 // FixtureBase requires 3 type arguments for GWT pattern implementation
 
+[FormatTestName]
 [SetSuiteStoreToProperties]
 [SetFeatureStoreToProperties]
 [SetScenarioStoreToProperties]
@@ -18,59 +20,63 @@ public class BddFixtureBase<TGiven, TWhen, TThen>
     where TWhen : RootStepBase<TWhen>, new()
     where TThen : RootStepBase<TThen>, new()
 {
+    private FixtureContext _context = null!;
+
     public TGiven Given { get; private set; } = null!;
 
     public TWhen When { get; private set; } = null!;
 
     public TThen Then { get; private set; } = null!;
 
-    internal FixtureContext Context { get; private set; } = null!;
-
     [SetUp]
     public void BddFixtureBaseBeforeEachTest()
     {
-        TestContextInstance.Current = TestContext.CurrentContext;
-
-        var featureStore = TestContextInstance.Current.Test.Properties.GetFeatureStore();
-        var scenarioStore = TestContextInstance.Current.Test.Properties.GetScenarioStore();
-
-        Context = new FixtureContext(SuiteStore.Instance, featureStore, scenarioStore);
+        _context = new FixtureContext();
 
         Given = new TGiven();
-        Given.Initialize(Context.FeatureStore, Context.ScenarioStore);
+        Given.Initialize(_context.FeatureStore, _context.ScenarioStore);
 
         When = new TWhen();
-        When.Initialize(Context.FeatureStore, Context.ScenarioStore);
+        When.Initialize(_context.FeatureStore, _context.ScenarioStore);
 
         Then = new TThen();
-        Then.Initialize(Context.FeatureStore, Context.ScenarioStore);
+        Then.Initialize(_context.FeatureStore, _context.ScenarioStore);
+
+        if (SettingsProvider.Settings.TestOutputHeaderProvider is not null)
+        {
+            TestContext.Progress.WriteLine(SettingsProvider.Settings.TestOutputHeaderProvider.CreateTestHeader());
+        }
+
+        TestContextInstance.Current = TestContext.CurrentContext;
     }
 
     [TearDown]
-    public void BddFixtureBaseAfterEachOfTheTests()
+    public async Task BddFixtureBaseAfterEachOfTheTests()
     {
         TestContextInstance.Current = default;
 
-        Context?.ScenarioStore?.Dispose();
+        await _context.ScenarioStore.DisposeAsync();
     }
 
     [OneTimeTearDown]
-    public static void BddFixtureBaseAfterAllTests()
+    public static async Task BddFixtureBaseAfterAllTests()
     {
-        var featureStore = TestContext.CurrentContext.Test.Properties.GetFeatureStore();
-        featureStore.Dispose();
+        var featureStore = TestContext.CurrentContext.GetFeatureStore();
+        if (featureStore != null)
+        {
+            await featureStore.DisposeAsync();
+        }
     }
 
-    protected TScenario ScenarioFactory<TScenario>() where TScenario : ScenarioBase, new()
+    protected TScenario ScenarioFactory<TScenario>()
+        where TScenario : ScenarioBase, new()
     {
-        return ContextFactory.Create<TScenario>(Context.ScenarioStore);
+        return ContextFactory.Create<TScenario>(_context.ScenarioStore);
     }
 
-    protected TFeature FeatureFactory<TFeature>() where TFeature : FeatureBase, new()
+    protected TFeature FeatureFactory<TFeature>()
+        where TFeature : FeatureBase, new()
     {
-        return ContextFactory.Create<TFeature>(Context.FeatureStore);
+        return ContextFactory.Create<TFeature>(_context.FeatureStore);
     }
 }
-
-#pragma warning restore CA1005
-#pragma warning restore CA1000

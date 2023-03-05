@@ -1,4 +1,6 @@
-﻿using JustBDD.Core.Contexts.Stores;
+﻿using System.Linq;
+using JustBDD.Core.Contexts;
+using JustBDD.Core.Contexts.Stores;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -11,21 +13,23 @@ internal sealed class SetFeatureStoreToPropertiesAttribute : NUnitAttribute, IAp
 {
     public void ApplyToTest(Test test)
     {
-        var featureStore = new ContextStore();
+        var featureStore = ContextStoreFactory.Create();
 
-        test.Properties.SetFeatureStore(featureStore);
+        SetFeatureStoreRecursively(test, featureStore);
+    }
 
-        // TODO: handle theory tests
-        if (test is not TestFixture testFixture)
+    private void SetFeatureStoreRecursively(ITest test, IContextStore featureStore)
+    {
+        if (test.Tests.Any())
         {
-            return;
+            foreach (var testItem in test.Tests)
+            {
+                SetFeatureStoreRecursively(testItem, featureStore);
+            }
         }
-
-        foreach (var testItem in testFixture.Tests)
+        else
         {
-            testItem.Properties.SetFeatureStore(featureStore);
+            test.Properties.SetFeatureStore(featureStore);
         }
     }
 }
-
-#pragma warning restore CA2000

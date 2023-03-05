@@ -10,42 +10,32 @@ public static class PropertyBagExtensions
     private const string FeatureStoreKey = "FeatureStore";
     private const string ScenarioStoreKey = "ScenarioStore";
 
-    public static ContextStore GetSuiteStore(this IPropertyBag propertyBag)
+    public static IContextStore? GetSuiteStore(this TestContext testContext)
     {
-        return (ContextStore)propertyBag.Get(SuiteStoreKey)!;
+        return (IContextStore?)testContext.Test.Properties.Get(SuiteStoreKey);
     }
 
-    public static ContextStore GetSuiteStore(this TestContext.PropertyBagAdapter propertyBag)
-    {
-        return (ContextStore)propertyBag.Get(SuiteStoreKey)!;
-    }
-
-    public static void SetSuiteStore(this IPropertyBag propertyBag, ContextStore suiteStore)
+    internal static void SetSuiteStore(this IPropertyBag propertyBag, IContextStore suiteStore)
     {
         propertyBag.Set(SuiteStoreKey, suiteStore);
     }
 
-    public static ContextStore GetFeatureStore(this IPropertyBag propertyBag)
+    public static IContextStore? GetFeatureStore(this TestContext testContext)
     {
-        return (ContextStore)propertyBag.Get(FeatureStoreKey)!;
+        return (IContextStore?)testContext.Test.Properties.Get(FeatureStoreKey);
     }
 
-    public static ContextStore GetFeatureStore(this TestContext.PropertyBagAdapter propertyBag)
-    {
-        return (ContextStore)propertyBag.Get(FeatureStoreKey)!;
-    }
-
-    public static void SetFeatureStore(this IPropertyBag propertyBag, ContextStore featureStore)
+    internal static void SetFeatureStore(this IPropertyBag propertyBag, IContextStore featureStore)
     {
         propertyBag.Set(FeatureStoreKey, featureStore);
     }
 
-    public static ContextStore GetScenarioStore(this TestContext.PropertyBagAdapter propertyBag)
+    public static IContextStore? GetScenarioStore(this TestContext testContext)
     {
-        return (ContextStore)propertyBag.Get(ScenarioStoreKey)!;
+        return (IContextStore?)testContext.Test.Properties.Get(ScenarioStoreKey);
     }
 
-    public static void SetScenarioStore(this IPropertyBag propertyBag, ContextStore featureStore)
+    internal static void SetScenarioStore(this IPropertyBag propertyBag, IContextStore featureStore)
     {
         propertyBag.Set(ScenarioStoreKey, featureStore);
     }

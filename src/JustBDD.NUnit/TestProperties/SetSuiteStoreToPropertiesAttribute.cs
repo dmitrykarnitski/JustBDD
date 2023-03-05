@@ -1,4 +1,5 @@
-﻿using JustBDD.Core.Contexts.Stores;
+﻿using System.Linq;
+using JustBDD.Core.Contexts.Stores;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -9,17 +10,21 @@ internal sealed class SetSuiteStoreToPropertiesAttribute : NUnitAttribute, IAppl
 {
     public void ApplyToTest(Test test)
     {
-        test.Properties.SetSuiteStore(SuiteStore.Instance);
+        SetSuiteStoreRecursively(test);
+    }
 
-        // TODO: handle theory tests
-        if (test is not TestFixture testFixture)
+    private void SetSuiteStoreRecursively(ITest test)
+    {
+        if (test.Tests.Any())
         {
-            return;
+            foreach (var testItem in test.Tests)
+            {
+                SetSuiteStoreRecursively(testItem);
+            }
         }
-
-        foreach (var testItem in testFixture.Tests)
+        else
         {
-            testItem.Properties.SetSuiteStore(SuiteStore.Instance);
+            test.Properties.SetSuiteStore(SuiteStore.Instance);
         }
     }
 }

@@ -1,19 +1,21 @@
 ﻿using JustBDD.Core.Contexts.Stores;
+using JustBDD.NUnit.TestProperties;
+using NUnit.Framework;
 
 namespace JustBDD.NUnit.ContextHelpers;
 
 internal class FixtureContext
 {
-    public FixtureContext(ContextStore suiteContextStore, ContextStore featureContextStore, ContextStore scenarioContextStore)
+    public FixtureContext()
     {
-        SuiteContextStore = suiteContextStore;
-        FeatureStore = featureContextStore;
-        ScenarioStore = scenarioContextStore;
+        SuiteContextStore = SuiteStore.Instance;
+        FeatureStore = TestContext.CurrentContext.GetFeatureStore()!;
+        ScenarioStore = TestContext.CurrentContext.GetScenarioStore()!;
     }
 
-    public ContextStore SuiteContextStore { get; }
+    public IContextStore SuiteContextStore { get; }
 
-    public ContextStore FeatureStore { get; }
+    public IContextStore FeatureStore { get; }
 
-    public ContextStore ScenarioStore { get; }
+    public IContextStore ScenarioStore { get; }
 }
