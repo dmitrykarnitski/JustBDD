@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using JustBDD.Core.Contexts;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -32,12 +33,13 @@ internal class Suite : SuiteBase
         Instance.ContextStore.Set(nameof(ServiceProvider), applicationFactory.Services);
     }
 
-    public static void CleanUp()
+    public static async Task CleanUpAsync()
     {
-        Instance.Dispose();
+        await Instance.DisposeAsync();
     }
 
-    private T GetAndResolveIfNotSet<T>(string propertyName) where T : notnull
+    private T GetAndResolveIfNotSet<T>(string propertyName)
+        where T : notnull
     {
         if (!ContextStore.Contains(propertyName))
         {

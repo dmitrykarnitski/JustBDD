@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using JustBDD.Core.Contexts;
+using JustBDD.Core.Contexts.Stores;
 using Sample.Api.Tests.InMemory.Integration.Framework.Api;
 using Sample.Api.Tests.InMemory.Integration.Framework.BddContexts.ScenarioHelpers;
 
@@ -15,12 +16,15 @@ internal class Scenario : ScenarioBase
 {
     public ApiClient ApiClient { get; }
 
-    public Mocks Mocks { get; }
-
     public Scenario()
     {
         ApiClient = new ApiClient(this);
-        Mocks = new Mocks(this);
+    }
+
+    public Mocks Mocks
+    {
+        get => ContextStore.GetAndInitialiseIfNotSet<Mocks>(nameof(Mocks));
+        set => ContextStore.Set(nameof(Mocks), value);
     }
 
     public string? BearerToken
@@ -31,17 +35,17 @@ internal class Scenario : ScenarioBase
 
     public HttpClient SutHttpClient
     {
-        get => ContextStore.Get<HttpClient>(nameof(SutHttpClient));
+        get => ContextStore.Get<HttpClient>(nameof(SutHttpClient))!;
         set => ContextStore.Set(nameof(SutHttpClient), value);
     }
 
-    public HttpResponseMessage HttpResponse
+    public HttpResponseMessage? HttpResponse
     {
         get => ContextStore.Get<HttpResponseMessage>(nameof(HttpResponse));
         set => ContextStore.Set(nameof(HttpResponse), value);
     }
 
-    public string HttpResponseBody
+    public string? HttpResponseBody
     {
         get => ContextStore.Get<string>(nameof(HttpResponseBody));
         set => ContextStore.Set(nameof(HttpResponseBody), value);

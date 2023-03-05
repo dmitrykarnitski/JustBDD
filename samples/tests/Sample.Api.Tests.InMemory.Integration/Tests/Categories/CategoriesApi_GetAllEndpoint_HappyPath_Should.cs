@@ -5,10 +5,10 @@ using Sample.Api.Tests.InMemory.Integration.TestHelpers.Builders.Categories.Doma
 
 namespace Sample.Api.Tests.InMemory.Integration.Tests.Categories;
 
-public class GetCategoryByIdApiHappyPathShould : TestFixtureBase
+public class CategoriesApi_GetAllEndpoint_HappyPath_Should : TestFixtureBase
 {
     [Test]
-    public void ReturnExistingCategoryById()
+    public void ReturnAllCategories()
     {
         var existingCategory = new CategoryBuilder()
             .WithRandomValues()
@@ -19,7 +19,7 @@ public class GetCategoryByIdApiHappyPathShould : TestFixtureBase
             .Build();
 
         Given.IHave.LoggedInAs.AValidUser().And.DatabaseHas.Category(existingCategory);
-        When.ICall.TheCategoriesApi.GetByIdEndpoint(existingCategory.Id);
-        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponseEqualTo(expectedResponse);
+        When.ICall.TheCategoriesApi.GetAllEndpoint();
+        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponseEqualTo(new[] { expectedResponse });
     }
 }

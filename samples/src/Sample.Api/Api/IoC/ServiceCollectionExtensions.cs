@@ -1,11 +1,9 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.Api.Api.Configuration;
-using Sample.Api.Api.Models.Request;
 using Sample.Api.Api.RequestPipeline.Authentication;
 using Sample.Api.Api.RequestPipeline.Authorization;
 using Sample.Api.Api.RequestPipeline.Swagger;
-using Sample.Api.Api.Validators;
 using Sample.Api.ApplicationServices;
 using Sample.Api.Data;
 using Sample.Api.Framework.Configuration;
@@ -27,8 +25,7 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddApiServices(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CreateCategoryRequest>, CreateCategoryRequestValidator>();
-        services.AddScoped<IValidator<UpdateCategoryRequest>, UpdateCategoryRequestValidator>();
+        services.AddValidatorsFromAssemblyContaining<Program>();
 
         services.AddControllers();
 

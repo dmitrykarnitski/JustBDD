@@ -9,11 +9,8 @@ namespace Sample.Api.Api.RequestPipeline.ExceptionHandling;
 
 public class ExceptionHandlingMiddleware
 {
-    private readonly RequestDelegate _next;
-
-    public ExceptionHandlingMiddleware(RequestDelegate next)
+    public ExceptionHandlingMiddleware(RequestDelegate _)
     {
-        _next = next;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -21,7 +18,7 @@ public class ExceptionHandlingMiddleware
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>()!;
 
         int statusCode;
-        ErrorResponse response;
+        object response;
 
         switch (exceptionHandlerPathFeature.Error)
         {

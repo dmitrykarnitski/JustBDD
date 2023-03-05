@@ -37,5 +37,10 @@ public class EnhancedDebugLogger : ILogger, IDisposable
         var message = formatter(state, exception);
 
         Debug.WriteLine(message);
+
+        if (exception is not null)
+        {
+            Debug.WriteLine(exception);
+        }
     }
 }

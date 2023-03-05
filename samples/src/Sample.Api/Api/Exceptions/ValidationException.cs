@@ -6,7 +6,7 @@ namespace Sample.Api.Api.Exceptions;
 public class ValidationException : ApiException
 {
     public ValidationException(IDictionary<string, string[]> errors)
-        : base("A validation error has occurred.")
+        : base("Request validation failed.")
     {
         Errors = new ReadOnlyDictionary<string, string[]>(errors);
     }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using JustBDD.NUnit.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Sample.Api.Api.Configuration;
@@ -30,6 +32,7 @@ public class TestSuiteSetup
             .WithWebHostBuilder(builder =>
             {
                 builder.ConfigureLogging(logging => { logging.ClearProviders(); });
+                builder.UseEnvironment(Environments.Production);
                 builder.ConfigureServices(services =>
                 {
                     services.AddSingleton(_ =>
@@ -56,8 +59,8 @@ public class TestSuiteSetup
     }
 
     [OneTimeTearDown]
-    public static void CleanUpAllTests()
+    public static async Task CleanUpAllTests()
     {
-        Suite.CleanUp();
+        await Suite.CleanUpAsync();
     }
 }

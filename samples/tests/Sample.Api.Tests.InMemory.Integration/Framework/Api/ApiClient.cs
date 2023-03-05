@@ -46,7 +46,7 @@ internal class ApiClient
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue(AuthenticationConstants.Scheme, _scenario.BearerToken);
         }
 
-        return _scenario.SutHttpClient!.SendAsync(requestMessage).GetAwaiter().GetResult();
+        return _scenario.SutHttpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
     }
 
     private void SetResponseToScenario(HttpResponseMessage httpResponseMessage)

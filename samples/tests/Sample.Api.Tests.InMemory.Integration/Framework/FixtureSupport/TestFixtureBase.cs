@@ -1,5 +1,4 @@
 ﻿using JustBDD.NUnit;
-using JustBDD.NUnit.TestNameFormatting;
 using NUnit.Framework;
 using Sample.Api.Tests.InMemory.Integration.Framework.BddContexts;
 using Sample.Api.Tests.InMemory.Integration.Framework.Logging;
@@ -9,14 +8,15 @@ using Sample.Api.Tests.InMemory.Integration.Framework.Steps.When;
 
 namespace Sample.Api.Tests.InMemory.Integration.Framework.FixtureSupport;
 
-[FormatTestName]
+[TestFixture]
+[JustBddSettings(typeof(SampleApiJustBddNUnitSettings))]
 public class TestFixtureBase : BddFixtureBase<GivenStep, WhenStep, ThenStep>
 {
-    internal Suite Suite { get; private set; }
+    internal Suite Suite { get; private set; } = null!;
 
-    internal Feature Feature { get; private set; }
+    internal Feature Feature { get; private set; } = null!;
 
-    internal Scenario Scenario { get; private set; }
+    internal Scenario Scenario { get; private set; } = null!;
 
     [SetUp]
     public void BaseBeforeEachTest()
@@ -27,7 +27,6 @@ public class TestFixtureBase : BddFixtureBase<GivenStep, WhenStep, ThenStep>
 
         Scenario.SutHttpClient = Suite.Application.CreateClient();
 
-        TestContextInstance.Current = TestContext.CurrentContext;
         TestOutputStreamHolder.Current = TestContext.Out;
     }
 

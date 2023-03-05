@@ -8,6 +8,11 @@ namespace Sample.Api.Tests.InMemory.Integration.TestHelpers.Mocks.Categories;
 
 public class MockedCategoriesRepository : MockedInMemoryRepository<Category, int>, ICategoriesRepository
 {
+    public MockedCategoriesRepository()
+        :base(x => x.Id, (lastId) => lastId + 1)
+    {
+    }
+
     public Task<Category> CreateAsync(Category category, CancellationToken cancellationToken)
     {
         return Task.FromResult(Create(category));

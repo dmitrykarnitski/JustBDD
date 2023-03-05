@@ -6,7 +6,7 @@ using Sample.Api.Tests.InMemory.Integration.TestHelpers.Builders.Categories.Doma
 
 namespace Sample.Api.Tests.InMemory.Integration.Tests.Categories;
 
-public class CreateCategoryApiHappyPathShould : TestFixtureBase
+public class CategoriesApi_CreateEndpoint_HappyPath_Should : TestFixtureBase
 {
     [Test]
     public void CreateANewCategory()

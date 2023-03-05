@@ -3,7 +3,7 @@ using Sample.Api.Tests.InMemory.Integration.Framework.FixtureSupport;
 
 namespace Sample.Api.Tests.InMemory.Integration.Tests.Categories;
 
-public class GetAllCategoriesApiSadPathShould : TestFixtureBase
+public class CategoriesApi_GetAllEndpoint_SadPath_Should : TestFixtureBase
 {
     [Test]
     [Description("fail with authentication error if token is expired")]

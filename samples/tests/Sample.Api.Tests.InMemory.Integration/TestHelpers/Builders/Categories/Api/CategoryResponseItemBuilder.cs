@@ -21,6 +21,6 @@ public class CategoryResponseItemBuilder
 
     public CategoryResponseItem Build()
     {
-        return _response.DeepClone()!;
+        return _response.DeepClone();
     }
 }

@@ -3,6 +3,7 @@ using System.Net;
 using FluentAssertions;
 using JustBDD.Core;
 using Newtonsoft.Json;
+using Sample.Api.Api.RequestPipeline.ExceptionHandling.Models;
 using Sample.Api.Tests.InMemory.Integration.Framework.Steps.Base;
 
 namespace Sample.Api.Tests.InMemory.Integration.Framework.Steps.Then.TheCall;
@@ -18,14 +19,41 @@ public class TheCallStep : Step<ThenStep>
 
     public IAnd<ThenStep> WillSucceedWithStatusCode(HttpStatusCode statusCode)
     {
-        Scenario.HttpResponse.StatusCode.Should().Be(statusCode);
+        Scenario.HttpResponse.Should().NotBeNull();
+
+        Scenario.HttpResponse!.StatusCode.Should().Be(statusCode);
 
         return this;
     }
 
     public IAnd<ThenStep> WillFailWithAuthenticationError()
     {
-        Scenario.HttpResponse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        Scenario.HttpResponse.Should().NotBeNull();
+
+        Scenario.HttpResponse!.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+
+        return this;
+    }
+
+    public IAnd<ThenStep> WillFailWithValidationError(string errorMessage, string propertyName)
+    {
+        Scenario.HttpResponse.Should().NotBeNull();
+        Scenario.HttpResponseBody.Should().NotBeNull();
+
+        Scenario.HttpResponse!.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+
+        var actualResponse = JsonConvert.DeserializeObject<ValidationErrorResponse>(Scenario.HttpResponseBody!);
+
+        var expectedResponse = new ValidationErrorResponse
+        {
+            Message = "Request validation failed.",
+            Errors = new Dictionary<string, string[]>
+            {
+                { propertyName, new []{errorMessage.Replace("{PropertyName}", propertyName) } }
+            }
+        };
+
+        actualResponse.Should().BeEquivalentTo(expectedResponse);
 
         return this;
     }
