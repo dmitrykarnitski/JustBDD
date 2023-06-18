@@ -49,9 +49,11 @@ public class CategoriesController : ApiController
 
         var newCategory = Mapper.Map<Category>(request);
 
-        var result = await _categoriesService.CreateAsync(newCategory, cancellationToken);
+        var createdCategory = await _categoriesService.CreateAsync(newCategory, cancellationToken);
 
-        return CreatedAtRoute("GetCategoryById", new { id = result.Id }, result);
+        var response = Mapper.Map<CategoryResponseItem>(createdCategory);
+
+        return CreatedAtRoute("GetCategoryById", new { id = createdCategory.Id }, response);
     }
 
     [HttpPut("{id}")]

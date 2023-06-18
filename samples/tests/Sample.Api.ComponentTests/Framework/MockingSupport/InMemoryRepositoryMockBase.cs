@@ -6,7 +6,7 @@ using Sample.Api.ComponentTests.Framework.Extensions;
 
 namespace Sample.Api.ComponentTests.Framework.MockingSupport;
 
-public class MockedInMemoryRepository<TItem, TId>
+public class InMemoryRepositoryMockBase<TItem, TId>
 {
     private readonly Func<TItem, TId> _idSelector;
     private readonly Func<TId?, TId> _newIdGenerator;
@@ -14,7 +14,7 @@ public class MockedInMemoryRepository<TItem, TId>
 
     private readonly List<TItem> _items = new();
 
-    public MockedInMemoryRepository(Func<TItem, TId> idSelector, Func<TId?, TId> newIdGenerator)
+    public InMemoryRepositoryMockBase(Func<TItem, TId> idSelector, Func<TId?, TId> newIdGenerator)
     {
         _idSelector = idSelector;
         _newIdGenerator = newIdGenerator;

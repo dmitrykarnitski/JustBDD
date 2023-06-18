@@ -1,6 +1,7 @@
 ﻿using JustBDD.Core;
 using Sample.Api.ComponentTests.Framework.Authentication;
 using Sample.Api.ComponentTests.Framework.Steps.Base;
+using Sample.Api.ComponentTests.Framework.Steps.Given.IHave.LoggedInAs;
 
 namespace Sample.Api.ComponentTests.Framework.Steps.Given.IHave;
 

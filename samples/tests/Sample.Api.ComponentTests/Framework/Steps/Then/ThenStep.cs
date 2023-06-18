@@ -1,6 +1,6 @@
 ﻿using Sample.Api.ComponentTests.Framework.Steps.Base;
 using Sample.Api.ComponentTests.Framework.Steps.Then.TheCall;
-using Sample.Api.ComponentTests.Framework.Steps.Then.TheDatabase;
+using Sample.Api.ComponentTests.Framework.Steps.Then.TheDatabaseWillContain;
 
 namespace Sample.Api.ComponentTests.Framework.Steps.Then;
 

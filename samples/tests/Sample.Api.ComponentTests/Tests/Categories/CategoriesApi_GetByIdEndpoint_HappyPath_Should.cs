@@ -5,6 +5,7 @@ using Sample.Api.ComponentTests.TestHelpers.Builders.Categories.Domain;
 
 namespace Sample.Api.ComponentTests.Tests.Categories;
 
+[TestFixture]
 public class CategoriesApi_GetByIdEndpoint_HappyPath_Should : TestFixtureBase
 {
     [Test]
@@ -18,8 +19,8 @@ public class CategoriesApi_GetByIdEndpoint_HappyPath_Should : TestFixtureBase
             .FromDomainModel(existingCategory)
             .Build();
 
-        Given.IHave.LoggedInAs.AValidUser().And.DatabaseHas.Category(existingCategory);
+        Given.IHave.LoggedInAs.AValidUser().And.Database.HasCategory(existingCategory);
         When.ICall.TheCategoriesApi.GetByIdEndpoint(existingCategory.Id);
-        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponseEqualTo(expectedResponse);
+        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponse.EqualTo(expectedResponse);
     }
 }

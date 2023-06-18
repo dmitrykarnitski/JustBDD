@@ -1,7 +1,7 @@
 ﻿using Sample.Api.ComponentTests.Framework.Steps.Base;
-using Sample.Api.ComponentTests.Framework.Steps.Then.TheDatabase.Categories;
+using Sample.Api.ComponentTests.Framework.Steps.Then.TheDatabaseWillContain.Categories;
 
-namespace Sample.Api.ComponentTests.Framework.Steps.Then.TheDatabase;
+namespace Sample.Api.ComponentTests.Framework.Steps.Then.TheDatabaseWillContain;
 
 public class TheDatabaseWillContainStep : Step<ThenStep>
 {

@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Api.RequestPipeline.ExceptionHandling.Models;
+﻿namespace Sample.Api.Api.RequestPipeline.ErrorHandling.Models;
 
 public class ErrorResponse
 {

@@ -1,4 +1,7 @@
 ﻿using JustBDD.NUnit;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Sample.Api.ComponentTests.Framework.BddContexts;
 using Sample.Api.ComponentTests.Framework.Logging;
@@ -8,7 +11,6 @@ using Sample.Api.ComponentTests.Framework.Steps.When;
 
 namespace Sample.Api.ComponentTests.Framework.FixtureSupport;
 
-[TestFixture]
 [JustBddSettings(typeof(SampleApiJustBddNUnitSettings))]
 public class TestFixtureBase : BddFixtureBase<GivenStep, WhenStep, ThenStep>
 {
@@ -25,15 +27,20 @@ public class TestFixtureBase : BddFixtureBase<GivenStep, WhenStep, ThenStep>
         Feature = FeatureFactory<Feature>();
         Scenario = ScenarioFactory<Scenario>();
 
-        Scenario.SutHttpClient = Suite.Application.CreateClient();
+        var scenarioApplication = Suite.Application
+                .WithWebHostBuilder(
+                    builder => builder
+                        .ConfigureLogging(o => o.ClearProviders().Services.AddSingleton<ILoggerFactory, ComponentTestsLoggerFactory>())
+                        .ConfigureServices(services => services.AddSingleton(_ => Scenario)));
 
-        TestOutputStreamHolder.Current = TestContext.Out;
+        Scenario.SutHttpClient = scenarioApplication.CreateClient();
+
+        TestContext.Out.WriteLine("Application logs:");
     }
 
     [TearDown]
     public void BaseAfterEachOfTheTests()
     {
-        TestOutputStreamHolder.Current?.Flush();
-        TestOutputStreamHolder.Current = null;
+        Scenario.ApplicationLogs.WriteTo(TestContext.Out);
     }
 }
