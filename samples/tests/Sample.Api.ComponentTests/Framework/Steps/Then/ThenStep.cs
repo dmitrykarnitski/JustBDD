@@ -9,7 +9,7 @@ public class ThenStep : RootStep<ThenStep>
 {
     public TheCallStep TheCall => StepFactory<TheCallStep>();
 
-    public ApplicationLogsStep ApplicationLogs => StepFactory<ApplicationLogsStep>();
-
     public TheDatabaseWillContainStep TheDatabaseWillHave => StepFactory<TheDatabaseWillContainStep>();
+
+    public ApplicationLogsStep ApplicationLogs => StepFactory<ApplicationLogsStep>();
 }

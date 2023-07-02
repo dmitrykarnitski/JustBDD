@@ -27,9 +27,9 @@ internal class Scenario : ScenarioBase
         set => ContextStore.Set(nameof(Mocks), value);
     }
 
-    public ApplicationLogs ApplicationLogs
+    public ApplicationLogsContainer ApplicationLogs
     {
-        get => ContextStore.GetAndInitialiseIfNotSet<ApplicationLogs>(nameof(ApplicationLogs));
+        get => ContextStore.GetAndInitialiseIfNotSet<ApplicationLogsContainer>(nameof(ApplicationLogs));
         set => ContextStore.Set(nameof(ApplicationLogs), value);
     }
 

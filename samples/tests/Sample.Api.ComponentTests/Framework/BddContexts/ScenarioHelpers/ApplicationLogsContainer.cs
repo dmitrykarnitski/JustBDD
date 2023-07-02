@@ -4,7 +4,7 @@ using Sample.Api.ComponentTests.Framework.Logging;
 
 namespace Sample.Api.ComponentTests.Framework.BddContexts.ScenarioHelpers;
 
-public class ApplicationLogs
+public class ApplicationLogsContainer
 {
     private readonly List<LogEntry> _entries = new();
 
