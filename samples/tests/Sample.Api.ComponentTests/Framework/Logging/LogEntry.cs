@@ -80,7 +80,7 @@ public class LogEntry
 
     private void WriteMessage(TextWriter output, int indent)
     {
-        var message = OriginalFormat ?? _formattedMessage.ReplaceLineEndings(" ");
+        var message = OriginalFormat ?? _formattedMessage.ReplaceLineEndings("  ");
 
         Write(output, $"[{_timestamp:O} - {Level}] {message}", indent, '·');
     }
@@ -90,12 +90,12 @@ public class LogEntry
         foreach (var entry in MessageState.Concat(Scope).OrderBy(x => x.Key))
         {
             var entryValue = entry.Value?.ToString() ?? "(empty)";
-            Write(output, $"{entry.Key}: {entryValue.ReplaceLineEndings(" ")}", indent);
+            Write(output, $"{entry.Key}: {entryValue.ReplaceLineEndings("  ")}", indent);
         }
 
         if (OriginalFormat is not null)
         {
-            Write(output, $"FormattedMessage: {_formattedMessage.ReplaceLineEndings(" ")}", indent);
+            Write(output, $"FormattedMessage: {_formattedMessage.ReplaceLineEndings("  ")}", indent);
         }
     }
 
