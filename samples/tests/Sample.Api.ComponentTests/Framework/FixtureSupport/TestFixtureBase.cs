@@ -1,8 +1,6 @@
 ﻿using JustBDD.NUnit;
 using JustBDD.NUnit.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Sample.Api.ComponentTests.Framework.BddContexts;
 using Sample.Api.ComponentTests.Framework.Logging;
