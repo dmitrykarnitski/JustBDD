@@ -10,4 +10,12 @@ public static class ServiceCollectionExtensions
     {
         return new ScenarioDependencyResolutionBuilder<TScenario>(services);
     }
+
+    public static IServiceCollection AddScenario<TScenario>(this IServiceCollection services, TScenario scenario)
+        where TScenario : ScenarioBase, new()
+    {
+        services.AddSingleton(_ => scenario);
+
+        return services;
+    }
 }

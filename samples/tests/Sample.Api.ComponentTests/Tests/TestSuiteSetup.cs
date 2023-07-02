@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Sample.Api.Api.Configuration;
 using Sample.Api.Api.RequestPipeline.Authentication;
@@ -27,10 +28,13 @@ public class TestSuiteSetup
     [OneTimeSetUp]
     public static void InitializeTests()
     {
+        TestContext.Out.WriteLine($"Test suite execution started at: {DateTime.UtcNow:O}");
+
         var application = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
                 builder.UseEnvironment(Environments.Production);
+                builder.ConfigureLogging(o => o.ClearProviders());
                 builder.ConfigureTestServices(services =>
                 {
                     services.AddSingleton(_ =>
@@ -57,5 +61,7 @@ public class TestSuiteSetup
     public static async Task CleanUpAllTests()
     {
         await Suite.CleanUpAsync();
+
+        await TestContext.Out.WriteLineAsync($"Tests suite execution finished at: {DateTime.UtcNow:O}");
     }
 }

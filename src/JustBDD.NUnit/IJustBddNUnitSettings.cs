@@ -8,5 +8,5 @@ public interface IJustBddNUnitSettings
 
     IReadableTestNameProvider? ReadableTestNameProvider { get; }
 
-    ITestOutputHeaderProvider? TestOutputHeaderProvider { get; }
+    ITestOutputHooks? TestOutputHooks { get; }
 }

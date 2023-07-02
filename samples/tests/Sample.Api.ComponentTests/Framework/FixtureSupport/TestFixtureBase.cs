@@ -1,4 +1,5 @@
 ﻿using JustBDD.NUnit;
+using JustBDD.NUnit.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,8 +31,8 @@ public class TestFixtureBase : BddFixtureBase<GivenStep, WhenStep, ThenStep>
         var scenarioApplication = Suite.Application
                 .WithWebHostBuilder(
                     builder => builder
-                        .ConfigureLogging(o => o.ClearProviders().Services.AddSingleton<ILoggerFactory, ComponentTestsLoggerFactory>())
-                        .ConfigureServices(services => services.AddSingleton(_ => Scenario)));
+                        .ConfigureLogging(o => o.InterceptApplicationLogs())
+                        .ConfigureServices(services => services.AddScenario(Scenario)));
 
         Scenario.SutHttpClient = scenarioApplication.CreateClient();
 
