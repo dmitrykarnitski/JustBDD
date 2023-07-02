@@ -5,9 +5,11 @@ namespace Sample.Api.Api.RequestPipeline.ErrorHandling;
 
 public static partial class LoggerExtensions
 {
+    public const string UnhandledErrorMessageFormat = "Unhandled error occurred. Path={Path}";
+
     [LoggerMessage(
         Level = LogLevel.Error,
-        Message = "Unhandled error occurred. Path={Path}")]
+        Message = UnhandledErrorMessageFormat)]
     public static partial void UnhandledErrorOccurred(
         this ILogger<UnhandledErrorHandlingMiddleware> logger, 
         string path, 

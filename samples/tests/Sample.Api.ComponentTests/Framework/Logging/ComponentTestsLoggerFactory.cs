@@ -20,7 +20,7 @@ internal class ComponentTestsLoggerFactory : ILoggerFactory
 
     public ILogger CreateLogger(string categoryName)
     {
-        return new EnhancedDebugLogger(categoryName, _scenario);
+        return new ComponentTestsLogger(categoryName, _scenario);
     }
 
     public void Dispose()

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Sample.Api.ComponentTests.Framework.Logging;
 
 namespace Sample.Api.ComponentTests.Framework.BddContexts.ScenarioHelpers;
 
 public class ApplicationLogs
 {
-    private readonly List<string> _entries = new();
+    private readonly List<LogEntry> _entries = new();
 
-    public void Add(string entry)
+    public IReadOnlyCollection<LogEntry> Entries => _entries;
+
+    public void Add(LogEntry entry)
     {
         _entries.Add(entry);
     }
@@ -16,7 +19,7 @@ public class ApplicationLogs
     {
         foreach (var entry in _entries)
         {
-            output.WriteLine(entry);
+            entry.WriteTo(output);
         }
     }
 }
