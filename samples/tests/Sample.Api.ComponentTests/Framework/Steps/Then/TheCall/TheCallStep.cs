@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using FluentAssertions;
 using JustBDD.Core;
-using Newtonsoft.Json;
-using Sample.Api.Api.RequestPipeline.ExceptionHandling.Models;
 using Sample.Api.ComponentTests.Framework.Steps.Base;
+using Sample.Api.ComponentTests.Framework.Steps.Then.TheCall.WillFailWith;
+using Sample.Api.ComponentTests.Framework.Steps.Then.TheCall.WillHaveAResponse;
 
 namespace Sample.Api.ComponentTests.Framework.Steps.Then.TheCall;
 
 public class TheCallStep : Step<ThenStep>
 {
+    public WillFailWithStep WillFailWith => StepFactory<WillFailWithStep>();
+
+    public WillHaveAResponseStep WillHaveAResponse => StepFactory<WillHaveAResponseStep>();
+
     public IAnd<ThenStep> WillSucceed()
     {
         WillSucceedWithStatusCode(HttpStatusCode.OK);
@@ -22,72 +25,6 @@ public class TheCallStep : Step<ThenStep>
         Scenario.HttpResponse.Should().NotBeNull();
 
         Scenario.HttpResponse!.StatusCode.Should().Be(statusCode);
-
-        return this;
-    }
-
-    public IAnd<ThenStep> WillFailWithAuthenticationError()
-    {
-        Scenario.HttpResponse.Should().NotBeNull();
-
-        Scenario.HttpResponse!.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-
-        return this;
-    }
-
-    public IAnd<ThenStep> WillFailWithValidationError(string errorMessage, string propertyName)
-    {
-        Scenario.HttpResponse.Should().NotBeNull();
-        Scenario.HttpResponseBody.Should().NotBeEmpty();
-
-        Scenario.HttpResponse!.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-
-        var actualResponse = JsonConvert.DeserializeObject<ValidationErrorResponse>(Scenario.HttpResponseBody!);
-
-        var expectedResponse = new ValidationErrorResponse
-        {
-            Message = "Request validation failed.",
-            Errors = new Dictionary<string, string[]>
-            {
-                { propertyName, new[] { errorMessage.Replace("{PropertyName}", propertyName) } }
-            }
-        };
-
-        actualResponse.Should().BeEquivalentTo(expectedResponse);
-
-        return this;
-    }
-
-    public IAnd<ThenStep> WillHaveAResponseEqualTo<TResponse>(TResponse expectedResponse)
-    {
-        Scenario.HttpResponseBody.Should().NotBeEmpty();
-
-        var actualResponse = JsonConvert.DeserializeObject<TResponse>(Scenario.HttpResponseBody!);
-
-        actualResponse.Should().BeEquivalentTo(expectedResponse, o => o.RespectingRuntimeTypes());
-
-        return this;
-    }
-
-    public IAnd<ThenStep> WillHaveAResponseItemsEqualTo<TItem>(IEnumerable<TItem> expectedResponse, bool checkOrdering = false)
-    {
-        Scenario.HttpResponseBody.Should().NotBeEmpty();
-
-        var actualResponse = JsonConvert.DeserializeObject<IEnumerable<TItem>>(Scenario.HttpResponseBody!);
-
-        actualResponse.Should().BeEquivalentTo(
-            expectedResponse,
-            o =>
-            {
-                if (checkOrdering)
-                {
-                    o.WithStrictOrdering();
-                }
-
-                o.RespectingRuntimeTypes();
-
-                return o;
-            });
 
         return this;
     }

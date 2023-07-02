@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using JustBDD.NUnit.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -12,13 +12,13 @@ using Sample.Api.Api.Configuration;
 using Sample.Api.Api.RequestPipeline.Authentication;
 using Sample.Api.ComponentTests.Framework.Authentication;
 using Sample.Api.ComponentTests.Framework.BddContexts;
-using Sample.Api.ComponentTests.Framework.Logging;
 using Sample.Api.Domain.Categories;
 
 #pragma warning disable CA1052 // NUnit requires setup and tear down to be static methods, but class should be non-static
 #pragma warning disable CA2000 // disposing of objects will be done as part of tear down
 
 [assembly: FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
+[assembly: Parallelizable(ParallelScope.Children)]
 
 namespace Sample.Api.ComponentTests.Tests;
 
@@ -28,12 +28,14 @@ public class TestSuiteSetup
     [OneTimeSetUp]
     public static void InitializeTests()
     {
+        TestContext.Out.WriteLine($"Test suite execution started at: {DateTime.UtcNow:O}");
+
         var application = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
-                builder.ConfigureLogging(logging => { logging.ClearProviders(); });
                 builder.UseEnvironment(Environments.Production);
-                builder.ConfigureServices(services =>
+                builder.ConfigureLogging(o => o.ClearProviders());
+                builder.ConfigureTestServices(services =>
                 {
                     services.AddSingleton(_ =>
                         new AuthenticationConfiguration
@@ -50,10 +52,7 @@ public class TestSuiteSetup
                 });
             });
 
-        var loggerFactory = application.Services.GetRequiredService<ILoggerFactory>();
-        loggerFactory.AddProvider(new EnhancedDebugLoggerProvider());
-
-        Trace.Listeners.Add(new TestOutputTraceListener());
+        application.ClientOptions.BaseAddress = new Uri("https://localhost");
 
         Suite.Initialize(application);
     }
@@ -62,5 +61,7 @@ public class TestSuiteSetup
     public static async Task CleanUpAllTests()
     {
         await Suite.CleanUpAsync();
+
+        await TestContext.Out.WriteLineAsync($"Tests suite execution finished at: {DateTime.UtcNow:O}");
     }
 }

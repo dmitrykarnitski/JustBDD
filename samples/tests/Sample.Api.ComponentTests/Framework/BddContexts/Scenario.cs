@@ -21,10 +21,16 @@ internal class Scenario : ScenarioBase
         ApiClient = new ApiClient(this);
     }
 
-    public Mocks Mocks
+    public ScenarioMocks Mocks
     {
-        get => ContextStore.GetAndInitialiseIfNotSet<Mocks>(nameof(Mocks));
+        get => ContextStore.GetAndInitialiseIfNotSet<ScenarioMocks>(nameof(Mocks));
         set => ContextStore.Set(nameof(Mocks), value);
+    }
+
+    public ApplicationLogsContainer ApplicationLogs
+    {
+        get => ContextStore.GetAndInitialiseIfNotSet<ApplicationLogsContainer>(nameof(ApplicationLogs));
+        set => ContextStore.Set(nameof(ApplicationLogs), value);
     }
 
     public string? BearerToken

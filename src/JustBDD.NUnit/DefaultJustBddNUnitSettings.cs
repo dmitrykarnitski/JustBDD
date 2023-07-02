@@ -8,5 +8,5 @@ public class DefaultJustBddNUnitSettings : IJustBddNUnitSettings
 
     public virtual IReadableTestNameProvider? ReadableTestNameProvider { get; } = new ReadableTestNameProvider();
 
-    public virtual ITestOutputHeaderProvider? TestOutputHeaderProvider { get; } = new TestOutputHeaderProvider();
+    public virtual ITestOutputHooks? TestOutputHooks { get; } = new TestOutputHooks();
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using JustBDD.Core.Contexts;
-using JustBDD.NUnit.TestProperties;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JustBDD.NUnit.DependencyInjection;
@@ -18,7 +17,7 @@ public class ScenarioDependencyResolutionBuilder<TScenario>
     public ScenarioDependencyResolutionBuilder<TScenario> Add<TAbstraction>(Func<TScenario, TAbstraction> resolver)
         where TAbstraction : class
     {
-        _ = _services.AddTransient(_ => resolver(CreateScenarioFromTestContext()));
+        _ = _services.AddTransient(sp => resolver(ResolveScenario(sp)));
 
         return this;
     }
@@ -26,14 +25,13 @@ public class ScenarioDependencyResolutionBuilder<TScenario>
     public ScenarioDependencyResolutionBuilder<TScenario> Add<TAbstraction>(Func<TScenario, IServiceProvider, TAbstraction> resolver)
         where TAbstraction : class
     {
-        _ = _services.AddTransient(sp => resolver(CreateScenarioFromTestContext(), sp));
+        _ = _services.AddTransient(sp => resolver(ResolveScenario(sp), sp));
 
         return this;
     }
 
-    private TScenario CreateScenarioFromTestContext()
+    private TScenario ResolveScenario(IServiceProvider serviceProvider)
     {
-        var scenarioStore = TestContextInstance.Current?.GetScenarioStore();
-        return ContextFactory.Create<TScenario>(scenarioStore!);
+        return serviceProvider.GetRequiredService<TScenario>();
     }
 }

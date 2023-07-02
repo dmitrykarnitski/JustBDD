@@ -5,6 +5,7 @@ using Sample.Api.ComponentTests.TestHelpers.Builders.Categories.Domain;
 
 namespace Sample.Api.ComponentTests.Tests.Categories;
 
+[TestFixture]
 public class CategoriesApi_GetAllEndpoint_HappyPath_Should : TestFixtureBase
 {
     [Test]
@@ -14,12 +15,12 @@ public class CategoriesApi_GetAllEndpoint_HappyPath_Should : TestFixtureBase
             .WithRandomValues()
             .Build();
 
-        var expectedResponse = new CategoryResponseItemBuilder()
+        var expectedResponseItem = new CategoryResponseItemBuilder()
             .FromDomainModel(existingCategory)
             .Build();
 
-        Given.IHave.LoggedInAs.AValidUser().And.DatabaseHas.Category(existingCategory);
+        Given.IHave.LoggedInAs.AValidUser().And.Database.HasCategory(existingCategory);
         When.ICall.TheCategoriesApi.GetAllEndpoint();
-        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponseItemsEqualTo(new[] { expectedResponse });
+        Then.TheCall.WillSucceed().And.TheCall.WillHaveAResponse.CollectionEqualTo(new[] { expectedResponseItem });
     }
 }

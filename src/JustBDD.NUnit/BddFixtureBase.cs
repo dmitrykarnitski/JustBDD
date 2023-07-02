@@ -29,7 +29,7 @@ public class BddFixtureBase<TGiven, TWhen, TThen>
     public TThen Then { get; private set; } = null!;
 
     [SetUp]
-    public void BddFixtureBaseBeforeEachTest()
+    public async Task BddFixtureBaseBeforeEachTest()
     {
         _context = new FixtureContext();
 
@@ -42,18 +42,19 @@ public class BddFixtureBase<TGiven, TWhen, TThen>
         Then = new TThen();
         Then.Initialize(_context.FeatureStore, _context.ScenarioStore);
 
-        if (SettingsProvider.Settings.TestOutputHeaderProvider is not null)
+        if (SettingsProvider.Settings.TestOutputHooks is not null)
         {
-            TestContext.Progress.WriteLine(SettingsProvider.Settings.TestOutputHeaderProvider.CreateTestHeader());
+            await SettingsProvider.Settings.TestOutputHooks.BeforeTestAsync(TestContext.Out);
         }
-
-        TestContextInstance.Current = TestContext.CurrentContext;
     }
 
     [TearDown]
     public async Task BddFixtureBaseAfterEachOfTheTests()
     {
-        TestContextInstance.Current = default;
+        if (SettingsProvider.Settings.TestOutputHooks is not null)
+        {
+            await SettingsProvider.Settings.TestOutputHooks.AfterTestAsync(TestContext.Out);
+        }
 
         await _context.ScenarioStore.DisposeAsync();
     }

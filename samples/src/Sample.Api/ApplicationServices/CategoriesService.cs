@@ -23,7 +23,7 @@ public class CategoriesService
     {
         var category = await _categoriesRepository.FindByIdAsync(id, cancellationToken);
 
-        return category ?? throw new RequestedCategoryNotFoundException(id);
+        return category ?? throw new CategoryNotFoundException(id);
     }
 
     public async Task<Category> CreateAsync(Category category, CancellationToken cancellationToken)

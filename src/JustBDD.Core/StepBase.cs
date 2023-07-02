@@ -23,19 +23,19 @@ public abstract class StepBase<TStep> : IAnd<TStep> where TStep : StepBase<TStep
         ScenarioStore = scenarioStore;
     }
 
-    public TScenario ScenarioFactory<TScenario>()
+    protected TScenario ScenarioFactory<TScenario>()
         where TScenario : ScenarioBase, new()
     {
         return ContextFactory.Create<TScenario>(ScenarioStore);
     }
 
-    public TFeature FeatureFactory<TFeature>()
+    protected TFeature FeatureFactory<TFeature>()
         where TFeature : FeatureBase, new()
     {
         return ContextFactory.Create<TFeature>(FeatureStore);
     }
 
-    public TStepBuilder StepFactory<TStepBuilder>()
+    protected TStepBuilder StepFactory<TStepBuilder>()
         where TStepBuilder : StepBase<TStep>, new()
     {
         var newStepBuilder = new TStepBuilder();

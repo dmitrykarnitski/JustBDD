@@ -1,21 +1,21 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Sample.Api.Api.Attributes;
 
-public static class LoggerExtensions
+public static partial class LoggerExtensions
 {
-    private static readonly Func<ILogger, string, string, string, string?, IDisposable?> executingControllerScopeAction =
-        LoggerMessage.DefineScope<string, string, string, string?>(
-            "Executing {ControllerName}.{ActionName}. Route: {HttpMethod} /{PathTemplate}");
+    public const string ControllerNamePlaceholder = "ControllerName";
+    public const string ActionNamePlaceholder = "ActionName";
+    public const string HttpMethodPlaceholder = "HttpMethod";
+    public const string PathTemplatePlaceholder = "PathTemplate";
 
-    public static IDisposable ExecutingControllerScope(
-        this ILogger logger,
+    [LoggerMessage(
+        Level = LogLevel.Information,
+        Message = $"Executing {{{ControllerNamePlaceholder}}}.{{{ActionNamePlaceholder}}}. Route: {{{HttpMethodPlaceholder}}} {{{PathTemplatePlaceholder}}}")]
+    public static partial void LogActionExecution(
+        this ILogger<LogActionExecutionAttribute> logger,
         string controllerName,
         string actionName,
-        string method,
-        string? pathTemplate)
-    {
-        return executingControllerScopeAction(logger, controllerName, actionName, method, pathTemplate)!;
-    }
+        string httpMethod,
+        string pathTemplate);
 }
